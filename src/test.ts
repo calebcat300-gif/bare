@@ -7,7 +7,7 @@ const messages: Message[] = [
     },
     {
         role: "assistant",
-        content: "Hello! How can I help?"
+        content: "Hey! What are we building today?"
     }
 ];
 

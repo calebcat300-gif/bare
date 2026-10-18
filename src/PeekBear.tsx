@@ -1,16 +1,15 @@
-
-import React, { useEffect, useState } from 'react';
-import { Box, Text } from 'ink';
+import React, { useEffect, useState } from "react";
+import { Box, Text } from "ink";
 
 const bear = [
-  '     ( )   ( )    ',
-  '    /  o   o  \\   ',
-  '   (     ᴥ     )  ',
-  '    \\_       _/   ',
-  '      |     |     ',
+  "     ( )   ( )    ",
+  "    /  o   o  \\   ",
+  "   (     ᴥ     )  ",
+  "    \\_       _/   ",
+  "      |     |     ",
 ];
 
-const blink = '    /  -   -  \\   ';
+const blink = "    /  -   -  \\   ";
 
 const frames = [
   { rows: 0, ms: 100 },
@@ -45,7 +44,7 @@ export default function PeekBear({ active, width }: Props) {
     if (frame >= frames.length - 1) return;
 
     const timer = setTimeout(() => {
-      setFrame(current => current + 1);
+      setFrame((current) => current + 1);
     }, frames[frame].ms);
 
     return () => clearTimeout(timer);
@@ -55,7 +54,7 @@ export default function PeekBear({ active, width }: Props) {
   const offset = Math.max(0, width - 26);
 
   const lines = [
-    ...Array(bear.length - current.rows).fill(''),
+    ...Array(bear.length - current.rows).fill(""),
     ...bear.slice(0, current.rows),
   ];
 
@@ -63,24 +62,25 @@ export default function PeekBear({ active, width }: Props) {
     lines[bear.length - current.rows + 1] = blink;
   }
 
-  const border = Array(width).fill('─');
-  border[0] = '╭';
-  border[width - 1] = '╮';
+  const border = Array(width).fill("─");
+  border[0] = "╭";
+  border[width - 1] = "╮";
 
   if (current.rows === 5) {
-    border[offset + 6] = 'o';
-    border[offset + 12] = 'o';
+    border[offset + 6] = "o";
+    border[offset + 12] = "o";
   }
 
   return (
     <Box flexDirection="column">
       {lines.map((line, index) => (
         <Text key={index}>
-          {' '.repeat(offset)}{line || ' '}
+          {" ".repeat(offset)}
+          {line || " "}
         </Text>
       ))}
 
-      <Text>{border.join('')}</Text>
+      <Text>{border.join("")}</Text>
     </Box>
   );
 }
