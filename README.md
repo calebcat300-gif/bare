@@ -2,6 +2,8 @@
 
 <img src="docs/banner.png" alt="Bare — AI Coding Harness" width="850">
 
+<img src="docs/logo.png" alt="Bare Bear Logo" width="160">
+
 # bare
 
 **Minimal by design. Aggressively optimized.**
