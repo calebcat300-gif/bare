@@ -1,27 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { render, Box, useStdout } from "ink";
+
 import Bear from "./Bear";
 import HoneyTitle from "./HoneyTitle";
+import HoneyTransition from "./HoneyTransition";
 import Chat from "./Chat";
+
+type Screen = "intro" | "honey" | "chat";
+
 function App() {
   const { stdout } = useStdout();
 
+  const [screen, setScreen] = useState<Screen>("intro");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setScreen("honey");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Box
-      flexDirection="column"
       width={stdout.columns}
       height={stdout.rows - 1}
-      justifyContent="center"
+      flexDirection="column"
+      justifyContent={screen === "chat" ? "flex-start" : "center"}
       alignItems="center"
     >
-      <Box flexDirection="row" alignItems="center">
-        <HoneyTitle />
-        <Bear />
-      </Box>
+      {screen === "intro" && (
+        <Box flexDirection="row" alignItems="center">
+          <HoneyTitle />
+          <Bear />
+        </Box>
+      )}
 
-      <Chat />
+      {screen === "honey" && (
+        <HoneyTransition onComplete={() => setScreen("chat")} />
+      )}
+
+      {screen === "chat" && <Chat />}
     </Box>
   );
 }
 
-render(<App />);
+render(<App />, {
+  alternateScreen: true,
+});

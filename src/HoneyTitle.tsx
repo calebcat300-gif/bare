@@ -18,7 +18,7 @@ const LOGO = Array.from({ length: 7 }, (_, row) =>
 );
 
 // Honey colors: dark amber through bright gold.
-const HONEY_COLORS = [
+export const HONEY_COLORS = [
   "#A9570F",
   "#C87514",
   "#E99C1B",
@@ -28,7 +28,7 @@ const HONEY_COLORS = [
   "#FFF5B5",
 ];
 
-function honeyColor(x: number, y: number, time: number) {
+export function honeyColor(x: number, y: number, time: number) {
   // Two moving waves create a liquid-like pattern.
   const wave1 = Math.sin(x * 0.38 - time * 0.38 + y * 0.7);
   const wave2 = Math.sin(x * 0.17 + time * 0.24 - y * 0.9);
