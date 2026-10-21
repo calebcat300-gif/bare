@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { render, Box, useStdout } from "ink";
-
+import Manager from "./Manager";
 import Bear from "./Bear";
 import HoneyTitle from "./HoneyTitle";
 import HoneyTransition from "./HoneyTransition";
@@ -44,7 +44,6 @@ function App() {
     </Box>
   );
 }
-
-render(<App />, {
+render(process.argv.includes("--manager") ? <Manager /> : <App />, {
   alternateScreen: true,
 });

@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text } from "ink";
 
-// Each letter is drawn using seven rows.
 const LETTERS = [
-  // B
   ["██████ ", "██   ██", "██   ██", "██████ ", "██   ██", "██   ██", "██████ "],
-  // A
   [" █████ ", "██   ██", "██   ██", "███████", "██   ██", "██   ██", "██   ██"],
-  // R
   ["██████ ", "██   ██", "██   ██", "██████ ", "██  ██ ", "██   ██", "██   ██"],
-  // E
   ["███████", "██     ", "██     ", "██████ ", "██     ", "██     ", "███████"],
 ];
 
@@ -17,7 +12,6 @@ const LOGO = Array.from({ length: 7 }, (_, row) =>
   LETTERS.map((letter) => letter[row]).join("  "),
 );
 
-// Honey colors: dark amber through bright gold.
 export const HONEY_COLORS = [
   "#A9570F",
   "#C87514",
@@ -29,7 +23,6 @@ export const HONEY_COLORS = [
 ];
 
 export function honeyColor(x: number, y: number, time: number) {
-  // Two moving waves create a liquid-like pattern.
   const wave1 = Math.sin(x * 0.38 - time * 0.38 + y * 0.7);
   const wave2 = Math.sin(x * 0.17 + time * 0.24 - y * 0.9);
 
@@ -44,7 +37,12 @@ export function honeyColor(x: number, y: number, time: number) {
   return HONEY_COLORS[index];
 }
 
-function HoneyTitle() {
+type HoneyTitleProps = {
+  scale?: 1 | 2;
+  marginRight?: number;
+};
+
+function HoneyTitle({ scale = 1, marginRight = 4 }: HoneyTitleProps) {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
@@ -55,9 +53,18 @@ function HoneyTitle() {
     return () => clearInterval(timer);
   }, []);
 
+  const rows = LOGO.flatMap((line, y) =>
+    Array.from({ length: scale }, (_, repeat) => ({
+      y: y * scale + repeat,
+      line: Array.from(line)
+        .map((char) => char.repeat(scale))
+        .join(""),
+    })),
+  );
+
   return (
-    <Box flexDirection="column" marginRight={4}>
-      {LOGO.map((line, y) => (
+    <Box flexDirection="column" marginRight={marginRight}>
+      {rows.map(({ line, y }) => (
         <Text key={y} wrap="truncate">
           {Array.from(line).map((char, x) =>
             char === " " ? (
